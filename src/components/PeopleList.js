@@ -14,7 +14,11 @@ class PeopleList extends Component {
 
   async componentDidMount() {
     try {
-      let peopleData = await SWAPI.get('/people?_limit=10');
+      let peopleData = await SWAPI.get('/people', {
+        params: {
+          _limit: 5
+        }
+      });
 
       this.setState({ people: peopleData.data });
     }
