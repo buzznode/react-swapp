@@ -1,1 +1,18 @@
+.nav-link {
+  color: var(--yellow);
+}
+
+.nav-link:hover {
+  color: var(--white);
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--yellow) ;
+  color: var(--dark);
+}
+
+.nav-pills .nav-link.active:hover {
+  color: var(--white);
+}
+
 @import '~bootstrap/scss/bootstrap.scss';

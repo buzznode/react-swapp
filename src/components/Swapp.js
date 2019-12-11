@@ -3,6 +3,7 @@ import '../styles/Swapp.scss';
 
 import Header from './Header';
 import HorizontalBar from './HorizontalBar';
+import Nav from './Nav';
 
 class Swapp extends Component {
   render() {
@@ -10,6 +11,7 @@ class Swapp extends Component {
       <>
         <Header />
         <HorizontalBar />
+        <Nav />
       </>
     )
   }
