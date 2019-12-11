@@ -4,8 +4,8 @@ import '../styles/Swapp.scss';
 const Header = () => {
   return (
     <>
-      <h1 className="header">SWAPP</h1>
-      <h3 className="subheader">A Star Wars Site</h3>
+      <div className="header">SWAPP</div>
+      <div className="subheader">A Star Wars Site</div>
     </>
   );
 }
