@@ -2,7 +2,9 @@ import React from 'react';
 
 const Starships = () => {
   return (
-    <h3>Starships!</h3>
+    <div className="content">
+      <h3>Starships</h3>
+    </div>
   );
 }
 

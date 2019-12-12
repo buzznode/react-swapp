@@ -2,7 +2,9 @@ import React from 'react';
 
 const People = () => {
   return (
-    <h3>People!</h3>
+    <div className="content">
+      <h3>People</h3>
+    </div>
   );
 }
 

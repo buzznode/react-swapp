@@ -2,7 +2,9 @@ import React from 'react';
 
 const Species = () => {
   return (
-    <h3>Species!</h3>
+    <div className="content">
+      <h3>Species</h3>
+    </div>
   );
 }
 
