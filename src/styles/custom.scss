@@ -1,18 +1,35 @@
+$dark: #282c34;
+
+// .nav-link {
+//   color: var(--yellow);
+// }
+
+// .nav-link:hover {
+//   color: var(--white);
+// }
+
+// .nav-pills .nav-link.active {
+//   background-color: var(--yellow) ;
+//   color: var(--dark);
+// }
+
+// .nav-pills .nav-link.active:hover {
+//   color: var(--white);
+// }
+
 .nav-link {
-  color: var(--yellow);
+  color: var(--yellow) !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
 }
 
 .nav-link:hover {
-  color: var(--white);
+  color: var(--white) !important;
 }
 
-.nav-pills .nav-link.active {
-  background-color: var(--yellow) ;
-  color: var(--dark);
-}
-
-.nav-pills .nav-link.active:hover {
-  color: var(--white);
+.nav-link.active {
+  background-color: $dark !important;
+  color: var(--white) !important;
 }
 
 @import '~bootstrap/scss/bootstrap.scss';
