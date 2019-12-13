@@ -29,9 +29,19 @@ body {
   line-height: 1;
 }
 
+.pad-left-1 {
+  padding-left: 1vmin;
+}
+
+.pad-right-1 {
+  padding-right: 1vmin;
+}
+
 .search-line {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .subheader {
