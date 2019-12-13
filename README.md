@@ -68,5 +68,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
 The purpose of this React SPA app is to allow visitors to explore the Universe of Star Wars by utilizing the site interface
-to view the People, Planets, Films, Species, Vehicles, and Starships that make up the Star Wars Universe and see how they are
+to view the Characters, Planets, Films, Species, Vehicles, and Starships that make up the Star Wars Universe and see how they are
 all tied together.

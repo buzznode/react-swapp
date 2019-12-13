@@ -13,7 +13,7 @@ const Header = (props) => {
       <div className="subheader">A Star Wars Site</div>
       <Navbar>
         <Nav activeKey={location.pathname}>
-          <Nav.Link href='/people'>People</Nav.Link>
+          <Nav.Link href='/characters'>Characters</Nav.Link>
           <Nav.Link href='/planets'>Planets</Nav.Link>
           <Nav.Link href='/films'>Films</Nav.Link>
           <Nav.Link href='/species'>Species</Nav.Link>

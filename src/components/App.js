@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/App.scss';
 
 import Header from './Header';
-import People from './People';
+import Characters from './Characters';
 import Planets from './Planets';
 import Films from './Films';
 import Species from './Species';
@@ -20,7 +20,7 @@ function App() {
     <Router>
       <Fragment>
         <HeaderWithRouter />
-        <Route exact path='/people' component={People} />
+        <Route exact path='/characters' component={Characters} />
         <Route exact path='/planets' component={Planets} />
         <Route exact path='/films' component={Films} />
         <Route exact path='/species' component={Species} />
