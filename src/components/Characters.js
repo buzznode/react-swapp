@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Characters = () => {
-  return (
-    <div className="content">
-      <div className="instructions">
-        Use the interace below to lookup information on a given character, select multiple characters, or even view all characters.
-        You can also select how many characters to view, sort them and the like.
+class Characters extends Component {
+  render() {
+    return (
+      <div className="content">
+        <div className="instructions">
+          Use the interace below to do some stuff with characters.
+        </div>
+        <form>
+          <div className="search-line">
+            Search Criteria
+            <input type='text' onChange={this.myChangeHandler} />
+            <button onClick={this.clickHandler}>Search</button>  
+          </div>
+        </form>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Characters

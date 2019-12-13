@@ -2,6 +2,7 @@ $dark: #282c34;
 
 body {
   background-color: $dark;
+  color: var(--white);
 }
 
 .instructions {
@@ -25,7 +26,12 @@ body {
   font-size: calc(50px + 2vmin);
   font-family: "Star Jedi Hollow";
   color: var(--yellow);
-  line-height: 1.0;
+  line-height: 1;
+}
+
+.search-line {
+  display: flex;
+  flex-direction: row;
 }
 
 .subheader {
@@ -37,7 +43,5 @@ body {
   font-size: calc(5px + 2vmin);
   font-family: "Star Jedi";
   color: var(--yellow);
-  line-height: 1.0;
+  line-height: 1;
 }
-
-
