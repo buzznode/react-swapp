@@ -1,8 +1,36 @@
 $dark: #282c34;
+$primary-color: var(--yellow);
+
 
 body {
   background-color: $dark;
   color: var(--white);
+}
+
+.card {
+  width: 18rem;
+}
+
+.card-body {
+  background-color: $primary-color;
+}
+
+.card-header {
+  background-color: $dark;
+  color: $primary-color;
+}
+
+.card-text {
+  color: $dark;
+}
+
+.cards-container {
+  align-content: space-around;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .instructions {
@@ -25,8 +53,12 @@ body {
   padding-left: calc(5px + 2vmin);
   font-size: calc(50px + 2vmin);
   font-family: "Star Jedi Hollow";
-  color: var(--yellow);
+  color: $primary-color;
   line-height: 1;
+}
+
+.item {
+  margin: 1rem;
 }
 
 .pad-left-1 {
@@ -52,6 +84,6 @@ body {
   padding-top: 0px;
   font-size: calc(5px + 2vmin);
   font-family: "Star Jedi";
-  color: var(--yellow);
+  color: $primary-color;
   line-height: 1;
 }
