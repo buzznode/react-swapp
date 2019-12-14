@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -87,7 +88,20 @@ function Characters() {
         ) : loading === null ? (
           <h1>No Characters Found</h1>
         ) : (
-          result.map(item => {return <p>Character: {item.name}</p>})
+          result.map(item => {
+            return (
+              <Card border="warning" style={{ width: '18rem' }}>
+                <Card.Header>{item.name}</Card.Header>
+                <Card.Body>
+                  {/* <Card.Title>Warning Card Title</Card.Title> */}
+                  <Card.Text>
+                    <div>Height: {item.height}</div>
+                    <div>Mass: {item.mass}</div>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            );              
+          })
         )
       }
     </div>
