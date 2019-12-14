@@ -9,7 +9,7 @@ const Header = (props) => {
 
   return (
     <>
-      <div className="header">SWAPP</div>
+      <div className="header">RE-SWAPP</div>
       <div className="subheader">A Star Wars Site</div>
       <Navbar>
         <Nav activeKey={location.pathname}>
