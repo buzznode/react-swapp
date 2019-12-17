@@ -14,26 +14,38 @@ function Characters() {
 
   function handleGetAll(e) {
     e.preventDefault();
+    setSearch('');
+    setQuery(search);
+  }
+
+  function handleSearchChange(e) {
+    if (e.target.value) {
+      const params = new URLSearchParams();
+      params.append("q", e.target.value);
+      setSearch(params);
+    }
+    else {
+      setSearch('');
+    }
   }
 
   function handleSubmit(e) {
     const form = e.currentTarget;
 
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    // if (form.checkValidity() === false) {
+    //   e.preventDefault();
+    //   e.stopPropagation();
+    // }
 
-    if (form[0].validity.valid) {
-      e.preventDefault();
-      setQuery(search);      
-    }
+    // if (form[0].validity.valid) {
+    //   e.preventDefault();
+    //   setQuery(search);      
+    // }
 
     setValidated(true);
   }
 
-  function useAsyncHook(criteria) {
-    console.log(`criteria: ${criteria}`);
+  function useAsyncHook(params) {
     const [result, setResult] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -42,9 +54,7 @@ function Characters() {
         try {
           setLoading(true);
           const response = await SWAPI.get('/people', {
-            params: {
-              criteria
-            }
+            params
           });
 
           setResult(response.data);
@@ -55,10 +65,10 @@ function Characters() {
         }
       }
 
-      if (criteria !== '') {
+      if (params !== '') {
         fetchCharacterList();
       }
-    }, [criteria]);
+    }, [params]);
 
     return [result, loading];
   }
@@ -67,26 +77,27 @@ function Characters() {
     <div className="content">
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
-          <Form.Group as={Col} md="4" controlId="validationCustom0">
+          <Form.Group as={Col} md="3">
             <Form.Label>Search Criteria</Form.Label>
             <Form.Control 
               required 
               type="text" 
               style={{width: '300px'}} 
               placeholder="Search string"
-              // onChange={e => setSearch(e.target.value)} 
-              onChange={e => setSearch(`q: ${e.target.value}`)}
+              onChange={handleSearchChange}
             />
             <Form.Control.Feedback type="invalid">
               Type something, loser
             </Form.Control.Feedback>
+            <br />
+            <Button type="submit" name="search" variant="outline-warning">Search</Button>
           </Form.Group>
-          <Form.Group as={Col} md="4">
+          <Form.Group as={Col} md="3">
             <Form.Label>Other Getters</Form.Label>
-            <Button onClick={handleGetAll}>Get All Characters</Button>
+            <br />
+            <Button type="submit" name="getAll" variant="outline-warning">Get All Characters</Button>
           </Form.Group>
         </Form.Row>
-        <Button type="submit" variant="outline-warning">Search</Button>
       </Form>
 
       <div className="cards-container">
