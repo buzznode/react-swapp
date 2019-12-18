@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import SWAPI from '../api/SWAPI';
@@ -9,14 +9,10 @@ import SWAPI from '../api/SWAPI';
 function Characters() {
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [validated, setValidated] = useState(false);
+  const [sort, setSort] = useState(false);
+  const [order, setOrder] = useState(false);
+  // const [validated, setValidated] = useState(false);
   const [result, loading] = useAsyncHook(query);
-
-  function handleGetAll(e) {
-    e.preventDefault();
-    setSearch('');
-    setQuery(search);
-  }
 
   function handleSearchChange(e) {
     if (e.target.value) {
@@ -31,6 +27,12 @@ function Characters() {
 
   function handleSubmit(e) {
     const form = e.currentTarget;
+    e.preventDefault();
+    e.stopPropagation();
+
+    setQuery(search);
+
+    alert(`sort check box is ${sort}`);
 
     // if (form.checkValidity() === false) {
     //   e.preventDefault();
@@ -42,7 +44,7 @@ function Characters() {
     //   setQuery(search);      
     // }
 
-    setValidated(true);
+    // setValidated(true);
   }
 
   function useAsyncHook(params) {
@@ -75,13 +77,14 @@ function Characters() {
 
   return (
     <div className="content">
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} md="3">
             <Form.Label>Search Criteria</Form.Label>
             <Form.Control 
               required 
               type="text" 
+              size="sm"
               style={{width: '300px'}} 
               placeholder="Search string"
               onChange={handleSearchChange}
@@ -90,12 +93,17 @@ function Characters() {
               Type something, loser
             </Form.Control.Feedback>
             <br />
-            <Button type="submit" name="search" variant="outline-warning">Search</Button>
+            <Button type="submit" variant="outline-warning">Apply</Button>
           </Form.Group>
           <Form.Group as={Col} md="3">
-            <Form.Label>Other Getters</Form.Label>
-            <br />
-            <Button type="submit" name="getAll" variant="outline-warning">Get All Characters</Button>
+            <Form.Label>Options</Form.Label>
+            <Form.Check 
+              label="Sort" 
+              onChange={(e) => setSort(e.target.checked)}
+            />
+            <Form.Check 
+              label="Order"
+              onChange={(e) => setOrder(e.target.checked)} />
           </Form.Group>
         </Form.Row>
       </Form>
