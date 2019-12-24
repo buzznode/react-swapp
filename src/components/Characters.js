@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, DropdownButton, Dropdown } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import SWAPI from '../api/SWAPI';
@@ -79,32 +79,27 @@ function Characters() {
     <div className="content">
       <Form onSubmit={handleSubmit}>
         <Form.Row>
-          <Form.Group as={Col} md="3">
-            <Form.Label>Search Criteria</Form.Label>
-            <Form.Control 
-              required 
-              type="text" 
-              size="sm"
-              style={{width: '300px'}} 
-              placeholder="Search string"
-              onChange={handleSearchChange}
-            />
-            <Form.Control.Feedback type="invalid">
-              Type something, loser
-            </Form.Control.Feedback>
-            <br />
-            <Button type="submit" variant="outline-warning">Apply</Button>
-          </Form.Group>
-          <Form.Group as={Col} md="3">
-            <Form.Label>Options</Form.Label>
-            <Form.Check 
-              label="Sort" 
-              onChange={(e) => setSort(e.target.checked)}
-            />
-            <Form.Check 
-              label="Order"
-              onChange={(e) => setOrder(e.target.checked)} />
-          </Form.Group>
+          <Col sm={3}>
+            <Form.Group>
+              <Form.Label>Full Text Search</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                size="sm"
+                style={{ width: "300px" }}
+                placeholder="Search string"
+                onChange={handleSearchChange}
+              />
+              <Form.Control.Feedback tpe="invalid">Type something, loser</Form.Control.Feedback>
+              <div className="vspacer1" />
+              <Button type="submit" variant="outline-warning">Apply</Button>
+            </Form.Group>
+          </Col>
+          <Col sm={3}>
+            <Form.Group>
+              <Form.Label>Additional Options</Form.Label>
+            </Form.Group>
+          </Col>
         </Form.Row>
       </Form>
 
