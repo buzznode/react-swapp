@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { Col, Row, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import SWAPI from '../api/SWAPI';
+import Item from './Item';
 
 function Characters() {
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState(false);
-  const [order, setOrder] = useState(false);
-  // const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState(false);
   const [result, loading] = useAsyncHook(query);
 
   function handleSearchChange(e) {
     if (e.target.value) {
       const params = new URLSearchParams();
-      params.append("q", e.target.value);
+      const value = e.target.value.toLowerCase() === 'all' ? '' : e.target.value;
+      params.append("q", value);
       setSearch(params);
     }
     else {
@@ -32,19 +32,17 @@ function Characters() {
 
     setQuery(search);
 
-    alert(`sort check box is ${sort}`);
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-    // if (form.checkValidity() === false) {
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    // }
+    if (form[0].validity.valid) {
+      e.preventDefault();
+      setQuery(search);      
+    }
 
-    // if (form[0].validity.valid) {
-    //   e.preventDefault();
-    //   setQuery(search);      
-    // }
-
-    // setValidated(true);
+    setValidated(true);
   }
 
   function useAsyncHook(params) {
@@ -83,7 +81,6 @@ function Characters() {
             <Form.Group>
               <Form.Label>Full Text Search</Form.Label>
               <Form.Control
-                required
                 type="text"
                 size="sm"
                 style={{ width: "300px" }}
@@ -112,6 +109,13 @@ function Characters() {
           ) : (
             result.map((item, index) => {
               return (
+                // <Item 
+                //   results={result}
+                //   header={'name'}
+                //   subheader="Statistics"
+                //   lineItems={['Height', 'Mass', 'Birth Year', 'Hair Color', 'Skin Color', 'Eye Color']}
+                //   lineValues={['height', 'mass', 'birth_year','hair_color', 'skin_color', 'eye_color']}
+                // />
                   <Card border="warning" className="item" key={index}>
                     <Card.Header>{item.name}</Card.Header>
                     <Card.Body>
