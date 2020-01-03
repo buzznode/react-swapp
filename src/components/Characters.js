@@ -16,12 +16,10 @@ function Characters() {
 
   function handleLimitChange(e) {
     if (e.target.value) {
-      params.has("_limit") ? params.set("_limit", e.target.value) : params.append("_limit", e.target.value);
+      updateParams("_limit", e.target.value);
     }
     else {
-      if (params.has("_limit")) {
-        params.delete("_limit");
-      }
+      updateParams("_limit", "", true);
     }
 
     setSearch(params);
@@ -30,12 +28,10 @@ function Characters() {
   function handleSearchChange(e) {
     if (e.target.value) {
       const value = e.target.value.toLowerCase() === 'all' ? '' : e.target.value;
-      params.has("q") ? params.set("q", value) : params.append("q", value);
+      updateParams("q", value);
     }
     else {
-      if (params.has("q")) {
-        params.delete("q");
-      }
+      updateParams("q", "", true);
     }
 
     setSearch(params);
@@ -65,6 +61,21 @@ function Characters() {
     setValidated(true);
   }
 
+  function updateParams(key, value, remove = false) {
+    console.log(`in updateParams with params: ${params}\nkey: ${key}\nvalue: ${value}\nremove: ${remove}`);
+
+    if (remove) {
+      if (params.has(key)) {
+        params.delete(key);
+      }
+
+      return;
+    }
+
+    params.has(key) ? params.set(key, value) : params.append(key, value);
+    console.log(`end updateParams: ${params}`);
+  }
+
   function useAsyncHook(params) {
     const [result, setResult] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -77,6 +88,8 @@ function Characters() {
             params
           });
 
+          document.getElementById('searchString').value = '';
+          document.getElementById('limitQuantity').value = '';
           setResult(response.data);
         }
         catch (e) {
@@ -101,6 +114,7 @@ function Characters() {
             <Form.Group>
               <Form.Label>Full Text Search</Form.Label>
               <Form.Control
+                id="searchString"
                 type="text"
                 size="sm"
                 style={{ width: "300px" }}
@@ -117,6 +131,7 @@ function Characters() {
             <Form.Group>
               <Form.Label>Limit Results</Form.Label>
               <Form.Control
+                id="limitQuantity"
                 type="text"
                 size="sm"
                 style={{ width: "100px" }}
