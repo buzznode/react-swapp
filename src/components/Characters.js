@@ -5,7 +5,6 @@ import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import SWAPI from '../api/SWAPI';
-import Items from './Items';
 
 function Characters() {
   const [query, setQuery] = useState('');
@@ -13,24 +12,41 @@ function Characters() {
   const [validated, setValidated] = useState(false);
   const [result, loading] = useAsyncHook(query);
 
-  function handleSearchChange(e) {
+  const params = new URLSearchParams();
+
+  function handleLimitChange(e) {
     if (e.target.value) {
-      const params = new URLSearchParams();
-      const value = e.target.value.toLowerCase() === 'all' ? '' : e.target.value;
-      params.append("q", value);
-      setSearch(params);
+      params.has("_limit") ? params.set("_limit", e.target.value) : params.append("_limit", e.target.value);
     }
     else {
-      setSearch('');
+      if (params.has("_limit")) {
+        params.delete("_limit");
+      }
     }
+
+    setSearch(params);
+  }
+
+  function handleSearchChange(e) {
+    if (e.target.value) {
+      const value = e.target.value.toLowerCase() === 'all' ? '' : e.target.value;
+      params.has("q") ? params.set("q", value) : params.append("q", value);
+    }
+    else {
+      if (params.has("q")) {
+        params.delete("q");
+      }
+    }
+
+    setSearch(params);
   }
 
   function handleSubmit(e) {
     const form = e.currentTarget;
-    e.preventDefault();
-    e.stopPropagation();
+    // e.preventDefault();
+    // e.stopPropagation();
 
-    setQuery(search);
+    // setQuery(search);
 
     if (form.checkValidity() === false) {
       e.preventDefault();
@@ -39,6 +55,10 @@ function Characters() {
 
     if (form[0].validity.valid) {
       e.preventDefault();
+
+      // set query to whatever search is. This will in turn be passed
+      // into useAsyncHook as "query" which will be consumed internally
+      // as params.
       setQuery(search);      
     }
 
@@ -57,22 +77,7 @@ function Characters() {
             params
           });
 
-          const data = [];
-          for (let i = 0; i < response.data.length; i++) {
-            data[i] = {};
-            const item = response.data[i];
-            data[i].header = item.name;
-            data[i].subheader = "Statistics";
-            data[i].stats = [];
-            data[i].stats.push({ key: "Height", value: item.height });
-            data[i].stats.push({ key: "Mass", value: item.mass });
-            data[i].stats.push({ key: "Birth Year", value: item.birth_year });
-            data[i].stats.push({ key: "Hair Color", value: item.hair_color });
-            data[i].stats.push({ key: "Skin Color", value: item.skin_color });
-            data[i].stats.push({ key: "Eye Color", value: item.eye_color });
-          };
-
-          setResult([data]);
+          setResult(response.data);
         }
         catch (e) {
           setLoading(null);
@@ -105,11 +110,19 @@ function Characters() {
               <Form.Control.Feedback tpe="invalid">Type something, loser</Form.Control.Feedback>
               <div className="vspacer1" />
               <Button type="submit" variant="outline-warning">Apply</Button>
+              <Button type="reset" variant="outine-warning">Reset</Button>
             </Form.Group>
           </Col>
           <Col sm={3}>
             <Form.Group>
-              <Form.Label>Additional Options</Form.Label>
+              <Form.Label>Limit Results</Form.Label>
+              <Form.Control
+                type="text"
+                size="sm"
+                style={{ width: "100px" }}
+                placeholder="Limit results"
+                onChange={handleLimitChange}
+              />
             </Form.Group>
           </Col>
         </Form.Row>
@@ -122,25 +135,24 @@ function Characters() {
           ) : loading === null ? (
             <h1>No Characters Found</h1>
           ) : (
-            // result.map((item, index) => {
-              // return (
-                <Items data={result} />
-                // <Card border="warning" className="item" key={index}>
-                //   <Card.Header>{item.name}</Card.Header>
-                //   <Card.Body>
-                //     <Card.Text>
-                //       <span><b><u>Statistics</u></b></span><br />
-                //       <span><b>Height:</b>&nbsp;&nbsp;{item.height}</span><br/>
-                //       <span><b>Mass:</b>&nbsp;&nbsp;{item.mass}</span><br/>
-                //       <span><b>Birth Year:</b>&nbsp;&nbsp;{item.birth_year}</span><br/>
-                //       <span><b>Hair Color:</b>&nbsp;&nbsp;{item.hair_color}</span><br/>
-                //       <span><b>Skin Color:</b>&nbsp;&nbsp;{item.skin_color}</span><br/>
-                //       <span><b>Eye Color:</b>&nbsp;&nbsp;{item.eye_color}</span><br/>
-                //     </Card.Text>
-                //   </Card.Body>
-                // </Card>
-              // );              
-            // })
+            result.map((item, index) => {
+              return (
+                <Card border="warning" className="item" key={index}>
+                  <Card.Header>{item.name}</Card.Header>
+                  <Card.Body>
+                    <Card.Text>
+                      <span><b><u>Statistics</u></b></span><br />
+                      <span><b>Height:</b>&nbsp;&nbsp;{item.height}</span><br/>
+                      <span><b>Mass:</b>&nbsp;&nbsp;{item.mass}</span><br/>
+                      <span><b>Birth Year:</b>&nbsp;&nbsp;{item.birth_year}</span><br/>
+                      <span><b>Hair Color:</b>&nbsp;&nbsp;{item.hair_color}</span><br/>
+                      <span><b>Skin Color:</b>&nbsp;&nbsp;{item.skin_color}</span><br/>
+                      <span><b>Eye Color:</b>&nbsp;&nbsp;{item.eye_color}</span><br/>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              );              
+            })
           )
         }
       </div>
