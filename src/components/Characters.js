@@ -37,12 +37,16 @@ function Characters() {
   function updateParams() {
     const ss = document.getElementById('searchString');
     const lq = document.getElementById('limitQuantity');
+    const sb = document.getElementById('sortBy');
+    const or = document.getElementById('order');
     let v = '';
 
+    // if the search string is 'all', convert to empty string otherwise use value
     v = ss.value && ss.value.toLowerCase() === 'all' ? '' : ss.value ? ss.value : '';
     params.delete('q');
     params.append('q', v);
 
+    // if limit quantity is provided use it
     v = lq.value ? lq.value : 0;
     params.delete('_limit');
     
@@ -50,6 +54,29 @@ function Characters() {
       params.append('_limit', v);
     }
 
+    // if sort by provided and not default, use it
+    v = sb.value && sb.value !== 'Select...' ? sb.value : '';
+    params.delete('_sort');
+    
+    if (v) {
+      v = v.toLowerCase();
+      v = v.replace(' ', '_');
+      params.append('_sort', v);
+
+      // if sort by provided and order is provided and not 
+      // 'Select...', use it otherwise default to 'asc'
+      v = or.value && or.value !== 'Select...' ? or.value : 'asc';
+      v = v === 'Descending' ? 'desc' : 'asc';
+      params.delete('_order');
+      params.append('_order', v);
+    }
+
+    /*
+    _sort=column&_order=asc
+    _sort=colA,colB&_order=desc,asc
+    _start=20&end=30  start is inclusive; end is exclusive
+    */
+   console.log(`params: ${params}`);
     setSearch(params);
   }
 
@@ -102,7 +129,7 @@ function Characters() {
               <Button type="reset" variant="outine-warning">Reset</Button>
             </Form.Group>
           </Col>
-          <Col sm={3}>
+          <Col sm={2}>
             <Form.Group>
               <Form.Label>Limit Results</Form.Label>
               <Form.Control
@@ -114,6 +141,43 @@ function Characters() {
                 onChange={updateParams}
               />
             </Form.Group>
+          </Col>
+          <Col sm={3}>
+            <Row>
+              <Form.Group>
+                <Form.Label>Sort By</Form.Label>
+                <Form.Control 
+                  as="select"
+                  id="sortBy"
+                  size="sm"
+                  style={{ width: "150px" }}
+                  onChange={updateParams}
+                >
+                  <option>Select...</option>
+                  <option>Birth Year</option>
+                  <option>Eye Color</option>
+                  <option>Hair Color</option>
+                  <option>Height</option>
+                  <option>Mass</option>
+                  <option>Skin Color</option>
+                </Form.Control>
+              </Form.Group>
+              &nbsp;&nbsp;
+              <Form.Group>
+                <Form.Label>Order</Form.Label>
+                <Form.Control 
+                  as="select"
+                  id="order"
+                  size="sm"
+                  style={{ width: "150px" }}
+                  onChange={updateParams}
+                >
+                  <option>Select...</option>
+                  <option>Ascending</option>
+                  <option>Descending</option>
+                </Form.Control>
+              </Form.Group>
+            </Row>
           </Col>
         </Form.Row>
       </Form>
