@@ -14,35 +14,8 @@ function Characters() {
 
   const params = new URLSearchParams();
 
-  function handleLimitChange(e) {
-    if (e.target.value) {
-      updateParams("_limit", e.target.value);
-    }
-    else {
-      updateParams("_limit", "", true);
-    }
-
-    setSearch(params);
-  }
-
-  function handleSearchChange(e) {
-    if (e.target.value) {
-      const value = e.target.value.toLowerCase() === 'all' ? '' : e.target.value;
-      updateParams("q", value);
-    }
-    else {
-      updateParams("q", "", true);
-    }
-
-    setSearch(params);
-  }
-
   function handleSubmit(e) {
     const form = e.currentTarget;
-    // e.preventDefault();
-    // e.stopPropagation();
-
-    // setQuery(search);
 
     if (form.checkValidity() === false) {
       e.preventDefault();
@@ -61,19 +34,23 @@ function Characters() {
     setValidated(true);
   }
 
-  function updateParams(key, value, remove = false) {
-    console.log(`in updateParams with params: ${params}\nkey: ${key}\nvalue: ${value}\nremove: ${remove}`);
+  function updateParams() {
+    const ss = document.getElementById('searchString');
+    const lq = document.getElementById('limitQuantity');
+    let v = '';
 
-    if (remove) {
-      if (params.has(key)) {
-        params.delete(key);
-      }
+    v = ss.value && ss.value.toLowerCase() === 'all' ? '' : ss.value ? ss.value : '';
+    params.delete('q');
+    params.append('q', v);
 
-      return;
+    v = lq.value ? lq.value : 0;
+    params.delete('_limit');
+    
+    if (v > 0) {
+      params.append('_limit', v);
     }
 
-    params.has(key) ? params.set(key, value) : params.append(key, value);
-    console.log(`end updateParams: ${params}`);
+    setSearch(params);
   }
 
   function useAsyncHook(params) {
@@ -88,8 +65,6 @@ function Characters() {
             params
           });
 
-          document.getElementById('searchString').value = '';
-          document.getElementById('limitQuantity').value = '';
           setResult(response.data);
         }
         catch (e) {
@@ -119,7 +94,7 @@ function Characters() {
                 size="sm"
                 style={{ width: "300px" }}
                 placeholder="Search string"
-                onChange={handleSearchChange}
+                onChange={updateParams}
               />
               <Form.Control.Feedback tpe="invalid">Type something, loser</Form.Control.Feedback>
               <div className="vspacer1" />
@@ -136,7 +111,7 @@ function Characters() {
                 size="sm"
                 style={{ width: "100px" }}
                 placeholder="Limit results"
-                onChange={handleLimitChange}
+                onChange={updateParams}
               />
             </Form.Group>
           </Col>
