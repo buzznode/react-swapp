@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { Col, Row } from 'react-bootstrap';
+import { ButtonToolbar, Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import SWAPI from '../api/SWAPI';
@@ -9,7 +9,7 @@ import SWAPI from '../api/SWAPI';
 function Characters() {
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [validated, setValidated] = useState(false);
+  // const [validated, setValidated] = useState(false);
   const [result, loading] = useAsyncHook(query);
 
   const params = new URLSearchParams();
@@ -38,7 +38,7 @@ function Characters() {
       setQuery(search);      
     }
 
-    setValidated(true);
+    // setValidated(true);
   }
 
   function updateParams() {
@@ -132,8 +132,10 @@ function Characters() {
               />
               <Form.Control.Feedback tpe="invalid">Type something, loser</Form.Control.Feedback>
               <div className="vspacer1" />
-              <Button type="submit" variant="outline-warning">Apply</Button>
-              <Button type="button" onClick={handleReset} variant="outine-warning">Reset</Button>
+              <ButtonToolbar>
+                <Button type="submit" variant="outline-warning">Apply</Button>
+                <Button type="button" onClick={handleReset} variant="outline-warning">Reset</Button>
+              </ButtonToolbar>
             </Form.Group>
           </Col>
           <Col sm={2}>
