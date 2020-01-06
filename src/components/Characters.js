@@ -9,7 +9,6 @@ import SWAPI from '../api/SWAPI';
 function Characters() {
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  // const [validated, setValidated] = useState(false);
   const [result, loading] = useAsyncHook(query);
 
   const params = new URLSearchParams();
@@ -134,6 +133,7 @@ function Characters() {
               <div className="vspacer1" />
               <ButtonToolbar>
                 <Button type="submit" variant="outline-warning">Apply</Button>
+                &nbsp;&nbsp;
                 <Button type="button" onClick={handleReset} variant="outline-warning">Reset</Button>
               </ButtonToolbar>
             </Form.Group>
@@ -201,7 +201,7 @@ function Characters() {
           ) : (
             result.map((item, index) => {
               return (
-                <Card border="warning" className="item" key={index}>
+                <Card border="warning" className="character-card item" key={index}>
                   <Card.Header>{item.name}</Card.Header>
                   <Card.Body>
                     <Card.Text>

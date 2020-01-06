@@ -7,8 +7,24 @@ body {
   color: var(--white);
 }
 
-.card {
+.character-card {
   width: 18rem;
+}
+
+.film-card {
+  width: 26rem;
+}
+
+.planet-card {
+  width: 18rem;
+}
+
+.species-card {
+  width: 18rem;
+}
+
+.vehicle-card {
+  width: 24rem;
 }
 
 .card-body {

@@ -9,7 +9,6 @@ import SWAPI from '../api/SWAPI';
 function Planets() {
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
-  const [validated, setValidated] = useState(false);
   const [result, loading] = useAsyncHook(query);
 
   const params = new URLSearchParams();
@@ -37,8 +36,6 @@ function Planets() {
       // as params.
       setQuery(search);      
     }
-
-    setValidated(true);
   }
 
   function updateParams() {
@@ -92,10 +89,10 @@ function Planets() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-      async function fetchCharacterList() {
+      async function fetchPlanetsList() {
         try {
           setLoading(true);
-          const response = await SWAPI.get('/people', {
+          const response = await SWAPI.get('/planets', {
             params
           });
 
@@ -108,7 +105,7 @@ function Planets() {
       }
 
       if (params !== '') {
-        fetchCharacterList();
+        fetchPlanetsList();
       }
     }, [params]);
 
@@ -133,7 +130,8 @@ function Planets() {
               <Form.Control.Feedback tpe="invalid">Type something, loser</Form.Control.Feedback>
               <div className="vspacer1" />
               <Button type="submit" variant="outline-warning">Apply</Button>
-              <Button type="button" onClick={handleReset} variant="outine-warning">Reset</Button>
+              &nbsp;&nbsp;
+              <Button type="button" onClick={handleReset} variant="outline-warning">Reset</Button>
             </Form.Group>
           </Col>
           <Col sm={2}>
@@ -161,13 +159,15 @@ function Planets() {
                   onChange={updateParams}
                 >
                   <option></option>
-                  <option>Birth Year</option>
-                  <option>Eye Color</option>
-                  <option>Hair Color</option>
-                  <option>Height</option>
-                  <option>Mass</option>
+                  <option>Climate</option>
+                  <option>Diameter</option>
+                  <option>Gravity</option>
                   <option>Name</option>
-                  <option>Skin Color</option>
+                  <option>Orbital Period</option>
+                  <option>Population</option>
+                  <option>Rotation Period</option>
+                  <option>Surface Water</option>
+                  <option>Terrain</option>
                 </Form.Control>
               </Form.Group>
               &nbsp;&nbsp;
@@ -193,23 +193,25 @@ function Planets() {
       <div className="cards-container">
         {
           loading === false ? (
-            <h1>Search for Characters</h1>
+            <h1>Search for Planets</h1>
           ) : loading === null ? (
-            <h1>No Characters Found</h1>
+            <h1>No Planets Found</h1>
           ) : (
             result.map((item, index) => {
               return (
-                <Card border="warning" className="item" key={index}>
+                <Card border="warning" className="planet-card item" key={index}>
                   <Card.Header>{item.name}</Card.Header>
                   <Card.Body>
                     <Card.Text>
                       <span><b><u>Statistics</u></b></span><br />
-                      <span><b>Height:</b>&nbsp;&nbsp;{item.height}</span><br/>
-                      <span><b>Mass:</b>&nbsp;&nbsp;{item.mass}</span><br/>
-                      <span><b>Birth Year:</b>&nbsp;&nbsp;{item.birth_year}</span><br/>
-                      <span><b>Hair Color:</b>&nbsp;&nbsp;{item.hair_color}</span><br/>
-                      <span><b>Skin Color:</b>&nbsp;&nbsp;{item.skin_color}</span><br/>
-                      <span><b>Eye Color:</b>&nbsp;&nbsp;{item.eye_color}</span><br/>
+                      <span><b>Population:</b>&nbsp;&nbsp;{item.population}</span><br/>
+                      <span><b>Diameter:</b>&nbsp;&nbsp;{item.diameter}</span><br/>
+                      <span><b>Climate:</b>&nbsp;&nbsp;{item.climate}</span><br/>
+                      <span><b>Gravity:</b>&nbsp;&nbsp;{item.gravity}</span><br/>
+                      <span><b>Terrain:</b>&nbsp;&nbsp;{item.terrain}</span><br/>
+                      <span><b>Surface Water:</b>&nbsp;&nbsp;{item.surface_water}</span><br/>
+                      <span><b>Rotation Period:</b>&nbsp;&nbsp;{item.rotation_period}</span><br/>
+                      <span><b>Orbital Period:</b>&nbsp;&nbsp;{item.orbital_period}</span><br/>
                     </Card.Text>
                   </Card.Body>
                 </Card>
